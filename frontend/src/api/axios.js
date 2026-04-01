@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://ominous-trout-g4g7p9pxwqrj2wgx6-5000.app.github.dev/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://sme-ecommerce.onrender.com/api',
 });
 
 api.interceptors.request.use(config => {

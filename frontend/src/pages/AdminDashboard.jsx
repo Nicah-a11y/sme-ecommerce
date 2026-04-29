@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
-import axios from 'axios';
 
 export default function AdminDashboard() {
   const { user } = useAuth();
@@ -52,18 +51,19 @@ export default function AdminDashboard() {
       formData.append('stock', newProduct.stock);
       if (image) formData.append('image', image);
       const token = localStorage.getItem('token');
-      await axios.post(
-        'https://sme-ecommerce.onrender.com/api/products',
-        formData,
-        { headers: { Authorization: 'Bearer ' + token } }
-      );
+      const res = await api.post('/products', formData, {
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
       setMessage('Product created successfully!');
       setNewProduct({ name: '', description: '', price: '', category: '', stock: '' });
       setImage(null);
       setImagePreview(null);
       fetchProducts();
     } catch (err) {
-      setMessage('Failed to create product. Please try again.');
+      setMessage('Failed: ' + (err.response?.data?.message || err.message));
     }
     setUploading(false);
   };

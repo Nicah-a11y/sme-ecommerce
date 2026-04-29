@@ -43,20 +43,24 @@ export default function AdminDashboard() {
     e.preventDefault();
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('name', newProduct.name);
-      formData.append('description', newProduct.description);
-      formData.append('price', newProduct.price);
-      formData.append('category', newProduct.category);
-      formData.append('stock', newProduct.stock);
-      if (image) formData.append('image', image);
-      const token = localStorage.getItem('token');
-      const res = await api.post('/products', formData, {
-        headers: {
-          'Authorization': 'Bearer ' + token,
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      if (image) {
+        const formData = new FormData();
+        formData.append('name', newProduct.name);
+        formData.append('description', newProduct.description);
+        formData.append('price', newProduct.price);
+        formData.append('category', newProduct.category);
+        formData.append('stock', newProduct.stock);
+        formData.append('image', image);
+        await api.post('/products', formData);
+      } else {
+        await api.post('/products', {
+          name: newProduct.name,
+          description: newProduct.description,
+          price: Number(newProduct.price),
+          category: newProduct.category,
+          stock: Number(newProduct.stock),
+        });
+      }
       setMessage('Product created successfully!');
       setNewProduct({ name: '', description: '', price: '', category: '', stock: '' });
       setImage(null);
@@ -276,7 +280,7 @@ export default function AdminDashboard() {
 
                 <div style={{ marginBottom: '1.5rem' }}>
                   <label style={{ display: 'block', color: '#555', fontSize: '0.9rem', marginBottom: '6px', fontWeight: '600' }}>
-                    Product Image
+                    Product Image (Optional)
                   </label>
                   <label style={{
                     display: 'block', border: '2px dashed #ccc', borderRadius: '12px',

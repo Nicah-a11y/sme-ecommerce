@@ -7,7 +7,11 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({ origin: '*' }));
+app.use(cors({
+  origin: ['https://sme-ecommerce-cm6d.vercel.app', 'http://localhost:5173', 'http://localhost:5174'],
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.use('/api/auth',     require('./routes/authRoutes'));
@@ -23,7 +27,7 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('MongoDB connected successfully');
     app.listen(process.env.PORT || 5000, () => {
-      console.log('Server running on port 5000');
+      console.log('Server running on port ' + (process.env.PORT || 5000));
     });
   })
   .catch(err => console.error('MongoDB error:', err.message));

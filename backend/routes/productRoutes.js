@@ -5,7 +5,7 @@ const { protect, adminOnly } = require('../middleware/authMiddleware');
 
 router.get('/',       ctrl.getProducts);
 router.get('/:id',    ctrl.getProductById);
-router.post('/',      protect, adminOnly, ctrl.createProduct);
+router.post('/',      protect, adminOnly, ctrl.upload.single('image'), ctrl.createProduct);
 router.put('/:id',    protect, adminOnly, ctrl.updateProduct);
 router.delete('/:id', protect, adminOnly, ctrl.deleteProduct);
 

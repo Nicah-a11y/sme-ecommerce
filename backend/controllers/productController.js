@@ -1,6 +1,6 @@
-const Product    = require('../models/Product');
-const cloudinary = require('cloudinary').v2;
-const multer     = require('multer');
+const Product     = require('../models/Product');
+const cloudinary  = require('cloudinary').v2;
+const multer      = require('multer');
 const streamifier = require('streamifier');
 
 cloudinary.config({
@@ -47,15 +47,16 @@ exports.getProductById = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
   try {
+    console.log('Body received:', req.body);
+    console.log('File received:', req.file ? 'YES' : 'NO');
+
     let imageUrl = '';
     let imagePublicId = '';
-
     if (req.file) {
       const result = await uploadToCloudinary(req.file.buffer);
       imageUrl = result.secure_url;
       imagePublicId = result.public_id;
     }
-
     const product = await Product.create({
       name: req.body.name,
       description: req.body.description,
@@ -65,9 +66,9 @@ exports.createProduct = async (req, res) => {
       imageUrl,
       imagePublicId,
     });
-
     res.status(201).json(product);
   } catch (err) {
+    console.log('Error:', err.message);
     res.status(500).json({ message: err.message });
   }
 };

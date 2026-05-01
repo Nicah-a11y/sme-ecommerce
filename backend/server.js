@@ -8,8 +8,9 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: ['https://sme-ecommerce-cm6d.vercel.app', 'http://localhost:5173', 'http://localhost:5174'],
-  credentials: true
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 app.use(express.json());

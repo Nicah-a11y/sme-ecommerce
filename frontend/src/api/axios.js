@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://sme-ecommerce.onrender.com/api',
+  baseURL: 'https://friendly-guide-7vgpxqx7xq592pqqp-5000.app.github.dev/api',
 });
 
 api.interceptors.request.use(config => {

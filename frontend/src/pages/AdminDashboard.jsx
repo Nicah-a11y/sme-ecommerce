@@ -42,32 +42,43 @@ export default function AdminDashboard() {
   const handleCreateProduct = async (e) => {
     e.preventDefault();
     setUploading(true);
+    setMessage('');
     try {
+      const formData = new FormData();
+      formData.append('name', newProduct.name);
+      formData.append('description', newProduct.description);
+      formData.append('price', newProduct.price);
+      formData.append('category', newProduct.category);
+      formData.append('stock', newProduct.stock);
       if (image) {
-        const formData = new FormData();
-        formData.append('name', newProduct.name);
-        formData.append('description', newProduct.description);
-        formData.append('price', newProduct.price);
-        formData.append('category', newProduct.category);
-        formData.append('stock', newProduct.stock);
         formData.append('image', image);
-        await api.post('/products', formData);
-      } else {
-        await api.post('/products', {
-          name: newProduct.name,
-          description: newProduct.description,
-          price: Number(newProduct.price),
-          category: newProduct.category,
-          stock: Number(newProduct.stock),
-        });
       }
+
+      const token = localStorage.getItem('token');
+      const response = await fetch(
+        'https://friendly-guide-7vgpxqx7xq592pqqp-5000.app.github.dev/api/products',
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          },
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to create product');
+      }
+
       setMessage('Product created successfully!');
       setNewProduct({ name: '', description: '', price: '', category: '', stock: '' });
       setImage(null);
       setImagePreview(null);
       fetchProducts();
     } catch (err) {
-      setMessage('Failed: ' + (err.response?.data?.message || err.message));
+      setMessage('Failed: ' + err.message);
     }
     setUploading(false);
   };

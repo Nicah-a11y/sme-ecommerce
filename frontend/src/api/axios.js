@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://effective-robot-7vgpxqx749pj2jv6-5000.app.github.dev/api',
+  baseURL: 'https://sme-ecommerce.onrender.com/api',
 });
 
 api.interceptors.request.use(config => {

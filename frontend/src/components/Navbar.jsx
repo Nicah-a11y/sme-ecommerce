@@ -30,23 +30,20 @@ export default function Navbar() {
       </Link>
 
       <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-        <Link to="/products" style={{
-          color: 'white', textDecoration: 'none', fontSize: '0.95rem',
-          padding: '6px 12px', borderRadius: '20px',
-          transition: 'background 0.3s',
-        }}
+        <Link to="/products" style={{ color: 'white', textDecoration: 'none', fontSize: '0.95rem', padding: '6px 12px', borderRadius: '20px' }}
           onMouseOver={e => e.target.style.background = 'rgba(255,255,255,0.15)'}
           onMouseOut={e => e.target.style.background = 'transparent'}>
           🏪 Products
         </Link>
 
+        <Link to="/contact" style={{ color: 'white', textDecoration: 'none', fontSize: '0.95rem', padding: '6px 12px', borderRadius: '20px' }}
+          onMouseOver={e => e.target.style.background = 'rgba(255,255,255,0.15)'}
+          onMouseOut={e => e.target.style.background = 'transparent'}>
+          📬 Contact
+        </Link>
+
         {user && (
-          <Link to="/cart" style={{
-            color: 'white', textDecoration: 'none', fontSize: '0.95rem',
-            padding: '6px 12px', borderRadius: '20px', position: 'relative',
-          }}
-            onMouseOver={e => e.target.style.background = 'rgba(255,255,255,0.15)'}
-            onMouseOut={e => e.target.style.background = 'transparent'}>
+          <Link to="/cart" style={{ color: 'white', textDecoration: 'none', fontSize: '0.95rem', padding: '6px 12px', borderRadius: '20px', position: 'relative' }}>
             🛒 Cart
             {cartCount > 0 && (
               <span style={{
@@ -61,21 +58,14 @@ export default function Navbar() {
         )}
 
         {user?.role === 'admin' && (
-          <Link to="/admin" style={{
-            color: '#FFD700', textDecoration: 'none', fontSize: '0.95rem',
-            padding: '6px 12px', borderRadius: '20px', fontWeight: 'bold',
-          }}>
+          <Link to="/admin" style={{ color: '#FFD700', textDecoration: 'none', fontSize: '0.95rem', padding: '6px 12px', borderRadius: '20px', fontWeight: 'bold' }}>
             ⚙️ Admin
           </Link>
         )}
 
         {user ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{
-              color: 'white', fontSize: '0.85rem',
-              background: 'rgba(255,255,255,0.15)',
-              padding: '6px 12px', borderRadius: '20px'
-            }}>
+            <span style={{ color: 'white', fontSize: '0.85rem', background: 'rgba(255,255,255,0.15)', padding: '6px 12px', borderRadius: '20px' }}>
               👤 {user.name}
             </span>
             <button onClick={() => { logout(); navigate('/'); }} style={{
@@ -88,20 +78,10 @@ export default function Navbar() {
           </div>
         ) : (
           <div style={{ display: 'flex', gap: '10px' }}>
-            <Link to="/login" style={{
-              color: 'white', textDecoration: 'none',
-              padding: '6px 16px', borderRadius: '20px',
-              border: '1px solid rgba(255,255,255,0.5)',
-              fontSize: '0.85rem'
-            }}>
+            <Link to="/login" style={{ color: 'white', textDecoration: 'none', padding: '6px 16px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.5)', fontSize: '0.85rem' }}>
               Login
             </Link>
-            <Link to="/register" style={{
-              color: '#1E3A5F', textDecoration: 'none',
-              padding: '6px 16px', borderRadius: '20px',
-              background: 'white', fontWeight: 'bold',
-              fontSize: '0.85rem'
-            }}>
+            <Link to="/register" style={{ color: '#1E3A5F', textDecoration: 'none', padding: '6px 16px', borderRadius: '20px', background: 'white', fontWeight: 'bold', fontSize: '0.85rem' }}>
               Register
             </Link>
           </div>
